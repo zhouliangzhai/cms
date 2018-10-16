@@ -1,0 +1,45 @@
+{% extends 'base.html'%}
+
+
+{% block content %}
+    <div class="panel-heading">用户列表</div>
+      <div class="panel-body">
+
+         <table class="table table-bordered table-hover table-striped">
+          <thead>
+            <tr>
+                <td>用户标示</td>
+                <td>用户名称</td>
+                <td>用户昵称</td>
+                <td>用户年龄</td>
+                <td>用户生日</td>
+                <td>操作</td>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ forloop.counter0 }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>
+                        <a href="{% url 'blog:show' user.id %}">{{ user.nickname }}</a>
+                    </td>
+                    <td>{{ user.age }}</td>
+                    <td>{{ user.birthday }}</td>
+                    <td>
+                        <a href="{% url 'blog:update' user.id %}">修改</a>
+                        <a onclick="return window.confirm('您确定要删除这个用户吗？')" href="{% url 'blog:delete_user' user.id %}">删除</a>
+                    </td>
+                </tr>
+            {% empty%}
+             <tr>
+                 <td colspan="6">对不起，当前没有用户</td>
+             </tr>
+
+             {% endfor %}
+          </tbody>
+      </table>
+
+      </div>
+    </div>
+{% endblock %}

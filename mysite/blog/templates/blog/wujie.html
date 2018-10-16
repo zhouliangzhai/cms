@@ -1,0 +1,31 @@
+{% extends 'base.html'%}
+{% block content %}
+{% load static %}
+    <table class="table table-hover">
+        <tr>
+            <td>文章标识</td>
+            <td>文章标题</td>
+            <td>文章内容</td>
+            <td>文章作者</td>
+            <td>点击率</td>
+            <td>操作</td>
+        </tr>
+        {% for at in articles %}
+        <tr>
+            <td>{{forloop.counter0}}</td>
+            <td>{{at.title}}</td>
+            <td>{{at.content | truncatechars:30}}</td>
+            <td>{{at.author.nickname}}</td>
+            <td><span class="badge">{{at.count}}</span></td>
+            <td>
+                <a href="{% url'blog:update_article' at.id%}">修改文章</a>
+                <a href="{% url'blog:delete_article' at.id%}">删除文章</a>
+            </td>
+        </tr>
+
+    </table>
+        {% empty %}
+        <h2>对不起，目前没有文章！！！ <a href="{% url 'blog:add_article' %}">请发表文章</a></h2>
+        {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title%}
+    发表文章
+{% endblock%}
+
+{% block content %}
+<script src="/static/tiny_mce/tiny_mce.js"></script>
+<div class="panel panel-primary">
+      <div class="panel-heading">
+          <h5>发表文章</h5>
+      </div>
+
+      <div class="panel-body">
+        <div style="color: red;" id="msg">{{msg}}</div>
+        <!--<form class="form-horizontal" action="/blog/add_article/" method="post">-->
+
+            {% csrf_token %}
+          <div class="form-group">
+            <div class="col-md-10 col-md-offset-1">
+              <input type="text" class="form-control" name="title" id="title" placeholder="请输入文章的标题">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-8 col-md-offset-0">
+                <textarea class="col-md-10 col-md-offset-1" name="content" id="content" cols="30" rows="20"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-danger" onclick="add_article()">发表文章</button>
+            </div>
+          </div>
+        <!--</form>-->
+
+
+      </div>
+    </div>
+<script>
+    tinyMCE.init({
+    "mode":"textareas",
+    "theme":"advanced",
+    "width":"700",
+    "height":"500"
+    });
+
+    function add_article() {
+        title = $("#title").val();
+        content = tinyMCE.activeEditor.getContent();
+    $.ajax({
+            url: "/blog/add_article/",
+            method: "POST",
+            data: {"title": title, "content": content, "csrfmiddlewaretoken": "{{ csrf_token }}"},
+            dataType: "json",
+            success: function (data) {
+                if (data.success) {
+                    $("#msg").html(data.msg)
+                    $("#title").val("")
+                    tinyMCE.activeEditor.setContent("")
+
+                    //演示前端跳转页面
+                   // window.location.pathname = "/blog/index/"
+
+
+                } else {
+                    $("#msg").html("文章添加失败，请重新添加！！！")
+                }
+            }
+
+        })
+
+
+    }
+
+</script>
+{% endblock%}

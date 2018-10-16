@@ -1,0 +1,36 @@
+{% extends 'base.html'%}
+
+
+{% block content %}
+    <div class="panel-heading">查询用户信息--{{user.nickname}}</div>
+      <div class="panel-body">
+
+        <table class="table table-bordered table-hover table-striped">
+          <thead>
+            <tr>
+                <td colspan="2">用户信息---{{user.nickname}}</td>
+            </tr>
+          </thead>
+          <tbody>
+                <tr>
+                    <td>用户名称：</td>
+                    <td>{{user.name}}</td>
+                </tr>
+                <tr>
+                    <td>用户昵称：</td>
+                    <td>{{user.nickname}}</td>
+                </tr>
+                <tr>
+                    <td>用户年龄：</td>
+                    <td>{{user.age}}</td>
+                </tr>
+                <tr>
+                    <td>用户生日：</td>
+                    <td>{{user.birthday}}</td>
+                </tr>
+          </tbody>
+      </table>
+
+      </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title%}
+    发表文章
+{% endblock%}
+
+{% block content %}
+<script src="/static/tiny_mce/tiny_mce.js"></script>
+<div class="panel panel-primary">
+      <div class="panel-heading">
+          <h5>修改文章</h5>
+      </div>
+
+      <div class="panel-body">
+        <div style="color: red;">{{msg}}</div>
+        <form class="form-horizontal" action="/blog/{{article.id}}/update_article/" method="post">
+
+            {% csrf_token %}
+          <div class="form-group">
+            <div class="col-md-10 col-md-offset-1">
+              <input type="text" class="form-control" value="{{article.title}}" name="title" id="title" >
+
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-8 col-md-offset-0">
+                <textarea class="col-md-10 col-md-offset-1"  name="content" id="content" cols="30" rows="20">{{article.content}}</textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-danger">修改文章</button>
+            </div>
+          </div>
+        </form>
+
+
+      </div>
+    </div>
+<script>
+    tinyMCE.init({
+    "mode":"textareas",
+    "theme":"advanced",
+    "width":"700",
+    "height":"500"
+    })
+</script>
+{% endblock%}

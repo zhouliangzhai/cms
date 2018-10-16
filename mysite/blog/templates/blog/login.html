@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title%}
+    登录页面
+{% endblock%}
+
+{% block content %}
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+          <h5>用户登录</h5>
+      </div>
+
+      <div class="panel-body">
+        <div style="color: red;">{{msg}}</div>
+        <form class="form-horizontal" action="/blog/login/" method="post">
+
+            {% csrf_token %}
+          <div class="form-group">
+            <label for="username" class="col-sm-2 control-label">用户名称：</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" value="{{username}}" name="username" id="username" placeholder="请输入您的名称">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">用户密码：</label>
+            <div class="col-sm-10">
+              <input type="password" class="form-control" name="password" id="password" placeholder="请输入您的密码">
+            </div>
+          </div>
+          <!--复选框-->
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <span><input type="checkbox" name="checkbox">记住密码</span>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label for="password2" class="col-sm-2 control-label">验证码：</label>
+            <div class="col-sm-10">
+                <div class="col-md-5">
+                    <a href="#" onclick="changeCode()"><img id="code" src="{% url 'blog:code' %}" alt="验证码" title="点击刷新"></a>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" name="code" placeholder="请输入验证码" autocomplete="off">
+                </div>
+                <!--<div class="col-md-3">-->
+                    <!--<a href="#" onclick="changeCode()">刷新验证码</a>-->
+                <!--</div>-->
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-danger">用户登录</button>
+            </div>
+          </div>
+        </form>
+
+
+      </div>
+    </div>
+    <script>
+      function changeCode(){
+            document.getElementById("code").src = "/blog/code?id="+ Math.random()
+        }
+    </script>
+
+{% endblock%}
